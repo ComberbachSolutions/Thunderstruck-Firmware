@@ -1,0 +1,18 @@
+[submodule "src/Drivers/Pins"]
+	path = src/Drivers/Pins
+	url = https://github.com/CraigComberbach/Pins.git
+[submodule "src/Drivers/Scheduler"]
+	path = src/Drivers/Scheduler
+	url = https://github.com/CraigComberbach/Scheduler.git
+[submodule "src/Drivers/A2D"]
+	path = src/Drivers/A2D
+	url = https://github.com/CraigComberbach/A2D.git
+[submodule "src/Drivers/I2C"]
+	path = src/Drivers/I2C
+	url = https://github.com/CraigComberbach/I2C.git
+[submodule "src/Drivers/SPI"]
+	path = src/Drivers/SPI
+	url = https://github.com/CraigComberbach/SPI.git
+[submodule "src/Drivers/Timers"]
+	path = src/Drivers/Timers
+	url = https://github.com/CraigComberbach/Timers.git
