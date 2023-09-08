@@ -100,7 +100,7 @@ void Configure_MCU(void)
 	Pin_Initialize(PIN_RB15,		LOW, PUSH_PULL, OUTPUT);
 	
 	/*************		Scheduler	 ***************/
-	Initialize_Scheduler(1, MILLISECOND);
+	Initialize_Scheduler(1);
 
 
 	/*************	Start-Up Complete ***************/

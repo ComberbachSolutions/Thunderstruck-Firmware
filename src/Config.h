@@ -66,7 +66,7 @@ enum PIN_DEFINITIONS
 enum SCHEDULER_DEFINITIONS
 {
 	TASK_,
-	NUMBER_OF_TASKS
+	NUMBER_OF_SCHEDULED_TASKS
 };
 
 //Expected Library Versions
@@ -76,8 +76,8 @@ enum SCHEDULER_DEFINITIONS
 	#define PINS_PATCH	0
 
 	//Scheduler Library
-	#define SCHEDULER_MAJOR	1
-	#define SCHEDULER_MINOR	0
+	#define SCHEDULER_MAJOR	0
+	#define SCHEDULER_MINOR	2
 	#define SCHEDULER_PATCH	0
 
 void Configure_MCU(void);
