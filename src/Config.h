@@ -4,6 +4,13 @@
 //Hardware specific include file
 #include <p24F16KA101.h>
 
+//Compiled information
+extern const char compiledOnDate[];
+extern const char compiledAtTime[];
+#define MAJOR_FIRMWARE_VERSION	0
+#define MINOR_FIRMWARE_VERSION	0
+#define PATCH_FIRMWARE_VERSION	0
+
 //Frequency Definitions
 enum FREQUENCY_UNITS
 {
@@ -30,13 +37,13 @@ struct TIME
 
 //Helpful redefinitions
 #define FOSC_Hz			8000000
-#define FOSC_kHz		FOSC_Hz/1000
-#define FOSC_MHz		FOSC_kHz/1000
-#define FCY_Hz			FOSC_Hz/2
-#define FCY_kHz			FCY_Hz/1000
-#define FCY_MHz			FCY_kHz/1000
-#define FCY_PERIOD_nS	1000000000/FCY_Hz
-#define FCY_PERIOD_pS	1000000000/FCY_kHz
+#define FOSC_kHz		(FOSC_Hz/1000)
+#define FOSC_MHz		(FOSC_kHz/1000)
+#define FCY_Hz			(FOSC_Hz/2)
+#define FCY_kHz			(FCY_Hz/1000)
+#define FCY_MHz			(FCY_kHz/1000)
+#define FCY_PERIOD_nS	(1000000000/FCY_Hz)
+#define FCY_PERIOD_pS	(1000000000/FCY_kHz)
 
 //Pins
 enum PIN_DEFINITIONS
@@ -62,23 +69,61 @@ enum PIN_DEFINITIONS
 	NUMBER_OF_PINS
 };
 
+//LED
+enum LED_DEFINITIONS
+{
+	LED_HEARTBEAT,
+	NUMBER_OF_LEDS
+};
+
 //Scheduler
 enum SCHEDULER_DEFINITIONS
 {
-	TASK_,
+	TASK_PROTOTYPE,
+	TASK_HEARTBEAT_LED,
 	NUMBER_OF_SCHEDULED_TASKS
 };
 
+//Buttons
+enum BUTTON_DEFINITIONS
+{
+	BUTTON_,
+	NUMBER_OF_BUTTONS
+};
+
+enum TIMER_DEFINITIONS
+{
+	TIMER_SCHEDULER,
+	TIMER_TIMER2,
+	TIMER_TIMER3,
+	NUMBER_OF_TIMERS
+};
+
 //Expected Library Versions
-	//Pins Library
+	//Pin Driver Library
 	#define PINS_MAJOR	2
-	#define PINS_MINOR	0
+	#define PINS_MINOR	1
 	#define PINS_PATCH	0
 
+	//Timer Driver Library
+	#define TIMERS_MAJOR 1
+	#define TIMERS_MINOR 0
+	#define TIMERS_PATCH 0
+
 	//Scheduler Library
-	#define SCHEDULER_MAJOR	0
-	#define SCHEDULER_MINOR	2
+	#define SCHEDULER_MAJOR	1
+	#define SCHEDULER_MINOR	0
 	#define SCHEDULER_PATCH	0
+
+	//LEDs Library
+	#define LEDS_MAJOR	1
+	#define LEDS_MINOR	0
+	#define LEDS_PATCH	0
+
+	//Buttons Debounce Library
+	#define BUTTON_CONTROL_MAJOR	2
+	#define BUTTON_CONTROL_MINOR	0
+	#define BUTTON_CONTROL_PATCH	0
 
 void Configure_MCU(void);
 

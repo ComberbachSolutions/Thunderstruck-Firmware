@@ -6,16 +6,30 @@
 /*************	Header Files	***************/
 #include "Config.h"
 #include "Pins.h"
-#include "scheduler.h"
+#include "Timers.h"
+#include "Scheduler.h"
+#include "LEDs.h"
+#include "ButtonControl.h"
 
 /************* Semantic Versioning***************/
-//This project requires the Pins library to fulfill it's roll
-#ifndef PINS_LIBRARY
+#ifndef PINS_DRIVER
 	#error "You need to include the Pins library for this code to compile"
+#endif
+
+#ifndef TIMERS_DRIVER
+	#error "You need to include the Timer Control Driver Library for this code to compile"
 #endif
 
 #ifndef SCHEDULER_LIBRARY
 	#error "You need to include the Scheduler library for this code to compile"
+#endif
+
+#ifndef LED_HAL
+	#error "You need to include the LED Control library for this code to compile"
+#endif
+
+#ifndef BUTTON_CONTROL_HAL
+	#error "You need to include the Button Control library for this code to compile"
 #endif
 
 /************		Config bits		*************/
@@ -58,11 +72,12 @@ void __attribute__((interrupt, auto_psv)) _StackError(void);
 void __attribute__((interrupt, auto_psv)) _MathError(void);
 
 /*************Function	Prototypes***************/
-/************* Main Body Of Code	***************/
+void Prototype_Task(unsigned long time_uS);
 
+/************* Main Body Of Code	***************/
 void Configure_MCU(void)
 {
-	/*************		Pins		***************/
+	/***********************Pins************************/
 	LATA = 0;
 	LATB = 0;
 	TRISA = ~0;
@@ -99,18 +114,40 @@ void Configure_MCU(void)
 	Pin_Initialize(PIN_RB14,		LOW, PUSH_PULL, OUTPUT);
 	Pin_Initialize(PIN_RB15,		LOW, PUSH_PULL, OUTPUT);
 	
-	/*************		Scheduler	 ***************/
-	Initialize_Scheduler(1);
+	/**********************Timers***********************/
+	Initialize_Timers();
+	
+	Setup_Timer(TIMER_SCHEDULER, TIMER1, 1, MILLI_SECONDS, &Scheduler_Timer_Interupt);
+	Timer_Start(TIMER_SCHEDULER);
 
+	/*********************Scheduler*********************/
+	Scheduler_Initialize();
+	Scheduler_Add_Profiling_Clock(&TMR1);
+	Scheduler_Set_Period_us(1000);
 
-	/*************	Start-Up Complete ***************/
-	while(1)
+	/***********************LEDs************************/
+	LED_Initialize(LED_HEARTBEAT, PIN_RB15, LED_FUNCTION_BREATHING);
+	Scheduler_Add_Task(TASK_HEARTBEAT_LED, &LED_Task, 1000, 1000, PERMANENT_TASK);
+
+	/***********************Prototype************************/
+	Scheduler_Add_Task(TASK_PROTOTYPE, &Prototype_Task, 2000000, 2000000, PERMANENT_TASK);
+	
+	/******************Start-Up Complete****************/
+	Scheduler_Run_Tasks();
+
+	return;
+}
+
+void Prototype_Task(unsigned long time_uS)
+{
+	static int16_t state = 0;
+	
+	if(state++ == 0)
 	{
-		while(Waiting_To_Run_Tasks())
-		{
-			asm("ClrWdt");
-			Task_Master();
-		}
+	}
+	else
+	{
+		state = 0;
 	}
 
 	return;

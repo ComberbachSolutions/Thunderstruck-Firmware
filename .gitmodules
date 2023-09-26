@@ -16,3 +16,18 @@
 [submodule "src/Drivers/Timers"]
 	path = src/Drivers/Timers
 	url = https://github.com/CraigComberbach/Timers.git
+[submodule "src/HAL/ButtonControl"]
+	path = src/HAL/ButtonControl
+	url = https://github.com/CraigComberbach/ButtonControl.git
+[submodule "src/HAL/LEDs/HAL-LEDs"]
+	path = src/HAL/LEDs/HAL-LEDs
+	url = https://github.com/ComberbachSolutions/HAL-LEDs.git
+[submodule "src/HAL/LEDs/LED-Control"]
+	path = src/HAL/LEDs/LED-Control
+	url = https://github.com/ComberbachSolutions/LED-Control.git
+[submodule "src/HAL/LED-Control"]
+	path = src/HAL/LED-Control
+	url = https://github.com/ComberbachSolutions/LED-Control.git
+[submodule "src/HAL/LEDControl"]
+	path = src/HAL/LEDControl
+	url = https://github.com/ComberbachSolutions/LEDControl.git
